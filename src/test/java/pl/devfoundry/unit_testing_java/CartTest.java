@@ -4,12 +4,14 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import java.time.Duration;
+import java.util.List;
+
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.emptyCollectionOf;
 
-import org.hamcrest.collection.IsEmptyCollection;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -47,5 +49,24 @@ class CartTest {
 				is(not(empty())),
 				is(not(emptyCollectionOf(Order.class)))
 				));
+		
+		assertThat(cart.getOrders(), allOf(
+				notNullValue(),
+				hasSize(1),
+				is(not(empty())),
+				is(not(emptyCollectionOf(Order.class)))
+				));
+		//w JUnit 5 mamy do dyspozycji assertAll
+		assertAll("this is a group of assertions for cart",
+				()->assertThat(cart.getOrders(), notNullValue()),
+				()->assertThat(cart.getOrders(), hasSize(1)),
+				()->assertThat(cart.getOrders(), is(not(empty()))),
+				()->assertThat(cart.getOrders(), is(not(emptyCollectionOf(Order.class)))),
+				()->assertThat(cart.getOrders().get(0).getMeals(), empty()),
+				()->{
+					List<Meal>mealList=cart.getOrders().get(0).getMeals();
+					assertThat(mealList,empty());
+				}
+				);
 	}
 }
