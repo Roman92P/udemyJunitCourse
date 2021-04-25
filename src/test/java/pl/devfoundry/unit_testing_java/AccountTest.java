@@ -4,6 +4,10 @@ package pl.devfoundry.unit_testing_java;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assumptions.*;
+
+import org.junit.jupiter.api.RepeatedTest;
+
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -61,6 +65,22 @@ class AccountTest {
 		Address defaultDeliveryAddress = account.getDefaultDeliveryAddress();
 		//Then
 		assertNotNull(defaultDeliveryAddress,"Address can't be null");
+	}
+	
+//	@Test
+	@RepeatedTest(2)
+	void newAccountWithNotNullAddressShoulfBeActive() {
+		//given
+		Address address = new Address("Puławska", "46/6");
+		//when
+		Account account = new Account(address);
+		//then
+		//jeśli warunek podany w assumingThat 
+		//będzie niespełniony to wszystkie assercje
+		// w lambdzie zostaną pominięte
+		assumingThat(address != null, ()->{
+			assertTrue(account.isActive());
+		});
 	}
 
 }

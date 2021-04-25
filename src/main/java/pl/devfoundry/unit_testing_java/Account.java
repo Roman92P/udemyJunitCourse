@@ -1,21 +1,23 @@
 package pl.devfoundry.unit_testing_java;
 
 public class Account {
-	
+
 	private boolean active;
 
 	private Address defaultDeliveryAddress;
+
 	public Account() {
 		this.active = false;
 	}
-	
-	
-	
+
 	public Account(Address defaultDeliveryAddress) {
 		this.defaultDeliveryAddress = defaultDeliveryAddress;
+		if (defaultDeliveryAddress != null) {
+			activate();
+		}else {
+			this.active = false;
+		}
 	}
-
-
 
 	public void activate() {
 		this.active = true;
@@ -32,8 +34,5 @@ public class Account {
 	public void setDefaultDeliveryAddress(Address defaultDeliveryAddress) {
 		this.defaultDeliveryAddress = defaultDeliveryAddress;
 	}
-
-	
-	
 
 }

@@ -2,7 +2,7 @@ package pl.devfoundry.unit_testing_java;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertArrayEquals;
@@ -13,10 +13,12 @@ import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
+@ExtendWith(BeforeAfterExtension.class)
 class OrderTest {
 	
-	private Order order;
+	private static Order order;
 	
 	@BeforeEach
 	void InitializeOrder() {
@@ -73,7 +75,6 @@ class OrderTest {
 		order.removeMealFromOrder(meal);
 		// then
 		assertThat(order.getMeals(), hasSize(0));
-
 	}
 
 	@Test
@@ -85,8 +86,8 @@ class OrderTest {
 		order.addMealToOrder(meal1);
 		order.addMealToOrder(meal2);
 		//then
-//		assertThat(order.getMeals(), contains(meal1, meal2));
-		assertThat(order.getMeals(), containsInAnyOrder(meal2, meal1));
+		assertThat(order.getMeals(), contains(meal1, meal2));
+//		assertThat(order.getMeals(), containsInAnyOrder(meal1, meal2));
 	}
 	
 	@Test
